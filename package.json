@@ -1,0 +1,10 @@
+{
+  "name": "herbalife-kiosk-portfolio-builder",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node --check code.js && node scripts/validate.mjs"
+  }
+}

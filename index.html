@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#7ac143" />
+  <title>Herbalife Kiosk — Portfolio Prototype</title>
+  <style>
+    :root {
+      --green: #7ac143;
+      --green-dark: #5ca322;
+      --green-deep: #356b18;
+      --mint: #eef9e7;
+      --mint-strong: #c8f298;
+      --ink: #233028;
+      --muted: #7d857f;
+      --line: #e7ebe7;
+      --soft: #f6f8f5;
+      --danger: #df6269;
+      --white: #ffffff;
+      --shadow: 0 20px 55px rgba(30, 48, 35, .16);
+      --phone-w: 390px;
+      --phone-h: 844px;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: #edf1eb;
+    }
+
+    * { box-sizing: border-box; }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    body { margin: 0; min-height: 100vh; background: radial-gradient(circle at 20% 8%, #fbfdf9 0, #edf2ea 42%, #dfe8dc 100%); }
+
+    .portfolio-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: minmax(340px, 520px) minmax(420px, 1fr);
+      align-items: center;
+      justify-content: center;
+      gap: clamp(32px, 7vw, 104px);
+      padding: 48px clamp(32px, 8vw, 120px);
+    }
+
+    .case-panel { max-width: 480px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(122, 193, 67, .12);
+      color: var(--green-deep);
+      font-size: 12px;
+      font-weight: 750;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+    .case-panel h1 { margin: 20px 0 12px; font-size: clamp(44px, 5vw, 72px); line-height: .98; letter-spacing: -.055em; }
+    .case-panel .lead { margin: 0 0 28px; max-width: 44ch; color: #59635c; font-size: 18px; line-height: 1.55; }
+    .role-card {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1px;
+      overflow: hidden;
+      border: 1px solid rgba(51, 73, 57, .1);
+      border-radius: 20px;
+      background: rgba(51, 73, 57, .1);
+      box-shadow: 0 15px 34px rgba(47, 67, 50, .08);
+    }
+    .role-item { padding: 18px; background: rgba(255,255,255,.72); backdrop-filter: blur(12px); }
+    .role-item span { display: block; margin-bottom: 7px; color: #79817b; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+    .role-item strong { font-size: 14px; line-height: 1.4; }
+    .source-note { margin: 20px 0 0; color: #788079; font-size: 12px; line-height: 1.55; }
+
+    .device-stage { position: relative; display: flex; justify-content: center; align-items: center; min-height: calc(var(--phone-h) + 40px); }
+    .device-stage::before {
+      content: "";
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(122,193,67,.24), rgba(122,193,67,0) 68%);
+      filter: blur(5px);
+    }
+    .phone {
+      position: relative;
+      z-index: 1;
+      width: var(--phone-w);
+      height: var(--phone-h);
+      overflow: hidden;
+      border: 10px solid #17201b;
+      border-radius: 49px;
+      background: var(--white);
+      box-shadow: var(--shadow), inset 0 0 0 1px rgba(255,255,255,.16);
+    }
+    .phone::before {
+      content: "";
+      position: absolute;
+      z-index: 20;
+      top: 0;
+      left: 50%;
+      width: 128px;
+      height: 27px;
+      transform: translateX(-50%);
+      border-radius: 0 0 18px 18px;
+      background: #17201b;
+      pointer-events: none;
+    }
+    .app { position: relative; height: 100%; overflow: hidden; background: var(--white); }
+    .statusbar {
+      position: absolute;
+      z-index: 12;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 18px 0;
+      color: #17201b;
+      font-size: 11px;
+      font-weight: 750;
+      pointer-events: none;
+    }
+    .status-icons { display: flex; align-items: center; gap: 5px; }
+    .signal { display: flex; align-items: flex-end; gap: 1px; height: 9px; }
+    .signal i { display: block; width: 2px; background: currentColor; border-radius: 1px; }
+    .signal i:nth-child(1) { height: 3px; } .signal i:nth-child(2) { height: 5px; }
+    .signal i:nth-child(3) { height: 7px; } .signal i:nth-child(4) { height: 9px; }
+    .battery { width: 17px; height: 8px; border: 1px solid currentColor; border-radius: 2px; padding: 1px; position: relative; }
+    .battery::after { content: ""; position: absolute; right: -3px; top: 2px; width: 2px; height: 4px; border-radius: 0 1px 1px 0; background: currentColor; }
+    .battery b { display: block; width: 75%; height: 100%; border-radius: 1px; background: currentColor; }
+
+    #screen { position: absolute; inset: 0; overflow: hidden; }
+    .screen { min-height: 100%; padding-top: 34px; background: var(--white); animation: screenIn .24s ease both; }
+    @keyframes screenIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+    .screen.has-nav { padding-bottom: 75px; }
+    .scroll { height: calc(100% - 34px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
+    .screen.has-nav .scroll { height: calc(100% - 109px); }
+    .scroll::-webkit-scrollbar { display: none; }
+    .pad { padding: 0 18px 24px; }
+
+    .topbar {
+      min-height: 52px;
+      display: grid;
+      grid-template-columns: 40px 1fr 40px;
+      align-items: center;
+      padding: 4px 12px;
+      border-bottom: 1px solid rgba(231,235,231,.65);
+      background: rgba(255,255,255,.94);
+    }
+    .topbar h2 { margin: 0; text-align: center; font-size: 16px; letter-spacing: -.01em; }
+    .icon-btn {
+      width: 38px;
+      height: 38px;
+      display: inline-grid;
+      place-items: center;
+      padding: 0;
+      border: 0;
+      border-radius: 12px;
+      color: var(--ink);
+      background: transparent;
+    }
+    .icon-btn:hover { background: var(--soft); }
+    .icon-btn.green { color: var(--green-dark); }
+    .icon-btn svg, .nav-item svg, .field-icon svg, .btn svg { width: 21px; height: 21px; }
+
+    .brand-row { display: flex; align-items: center; justify-content: center; gap: 9px; padding: 13px 18px 9px; }
+    .brand-row img { width: 30px; height: 30px; object-fit: contain; border-radius: 50%; background: #f5f7f4; }
+    .brand-row button { display: flex; align-items: center; gap: 6px; padding: 0; border: 0; background: transparent; color: var(--ink); font-weight: 650; }
+    .chev { display: inline-block; width: 8px; height: 8px; border-right: 1.5px solid var(--green-dark); border-bottom: 1.5px solid var(--green-dark); transform: rotate(45deg) translateY(-2px); }
+
+    .segmented { display: grid; grid-template-columns: 1fr 1fr; margin: 0 18px 12px; padding: 3px; border-radius: 9px; background: #f1f2f0; }
+    .segmented button { min-height: 32px; border: 0; border-radius: 7px; background: transparent; color: #8c918d; font-size: 13px; }
+    .segmented button.active { color: #fff; background: var(--green); box-shadow: 0 2px 7px rgba(92,163,34,.2); }
+
+    .map-area { position: relative; height: 462px; overflow: hidden; background: #f4f5f2; }
+    .map-area svg { width: 100%; height: 100%; }
+    .map-label { fill: #a1a69f; font-size: 10px; font-family: inherit; }
+    .radius { fill: rgba(122,193,67,.14); }
+    .map-pin {
+      position: absolute;
+      right: 54px;
+      top: 260px;
+      width: 43px;
+      height: 43px;
+      display: grid;
+      place-items: center;
+      border: 8px solid rgba(200,242,152,.7);
+      border-radius: 50%;
+      color: var(--green-dark);
+      background: var(--mint-strong);
+      box-shadow: 0 5px 15px rgba(52,92,35,.15);
+    }
+    .location-card {
+      position: absolute;
+      z-index: 2;
+      left: 14px;
+      right: 14px;
+      bottom: 16px;
+      padding: 17px;
+      border: 1px solid rgba(41,61,47,.06);
+      border-radius: 16px;
+      background: rgba(255,255,255,.96);
+      box-shadow: 0 12px 34px rgba(35,48,40,.13);
+    }
+    .location-card .name { margin: 0 0 8px; font-size: 14px; font-weight: 700; }
+    .location-card .address { margin: 0; color: #59615c; font-size: 12px; }
+    .location-card .row { display: flex; align-items: center; justify-content: space-between; margin-top: 15px; }
+    .eta { display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 650; }
+
+    .btn { min-height: 43px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 18px; border: 0; border-radius: 10px; font-weight: 700; }
+    .btn.small { min-height: 34px; padding: 0 14px; font-size: 12px; }
+    .btn.primary { color: #fff; background: var(--green); box-shadow: 0 6px 14px rgba(92,163,34,.18); }
+    .btn.primary:hover { background: var(--green-dark); }
+    .btn.secondary { color: var(--green-dark); background: var(--mint); }
+    .btn.ghost { color: var(--danger); background: #fff8f8; }
+    .btn.full { width: 100%; }
+    .btn:disabled { opacity: .45; cursor: default; box-shadow: none; }
+
+    .kiosk-list { padding: 6px 18px 30px; }
+    .kiosk-list h3 { margin: 12px 0 12px; font-size: 12px; color: var(--muted); font-weight: 650; }
+    .kiosk-item { width: 100%; display: grid; grid-template-columns: 48px 1fr 24px; align-items: center; gap: 12px; padding: 13px; border: 0; border-radius: 14px; text-align: left; color: var(--ink); background: var(--mint-strong); }
+    .kiosk-illustration { width: 48px; height: 56px; display: grid; place-items: center; border-radius: 13px; background: rgba(255,255,255,.72); }
+    .kiosk-illustration svg { width: 32px; height: 42px; }
+    .kiosk-item strong { display: block; margin-bottom: 4px; font-size: 13px; }
+    .kiosk-item span { display: block; color: #5d6a60; font-size: 11px; line-height: 1.45; }
+
+    .search-row { display: grid; grid-template-columns: 1fr 42px; gap: 8px; padding: 4px 18px 13px; }
+    .search { position: relative; }
+    .search input { width: 100%; height: 42px; padding: 0 14px 0 39px; border: 1px solid transparent; border-radius: 11px; outline: 0; background: var(--soft); color: var(--ink); }
+    .search input:focus { border-color: rgba(122,193,67,.45); background: #fff; box-shadow: 0 0 0 3px rgba(122,193,67,.1); }
+    .search svg { position: absolute; left: 13px; top: 11px; width: 19px; height: 19px; color: #9ba19d; }
+    .filter-btn { position: relative; width: 42px; height: 42px; display: grid; place-items: center; border: 0; border-radius: 11px; color: var(--green-dark); background: var(--mint); }
+    .filter-dot { position: absolute; top: 8px; right: 8px; width: 7px; height: 7px; border: 2px solid #fff; border-radius: 50%; background: var(--green); }
+
+    .section-title { display: flex; align-items: center; justify-content: space-between; margin: 3px 0 13px; }
+    .section-title h3 { margin: 0; font-size: 15px; }
+    .section-title span { color: var(--muted); font-size: 11px; }
+    .product-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .product-card { position: relative; min-width: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: #fff; box-shadow: 0 7px 22px rgba(37,53,42,.045); }
+    .product-open { width: 100%; display: block; padding: 12px 11px 10px; border: 0; text-align: left; color: inherit; background: #fff; }
+    .product-image { height: 136px; display: grid; place-items: center; border-radius: 12px; background: linear-gradient(160deg, #fbfcfa, #f3f6f1); }
+    .product-image img { max-width: 82%; max-height: 124px; object-fit: contain; mix-blend-mode: multiply; }
+    .product-price { margin-top: 11px; font-size: 13px; font-weight: 780; }
+    .product-name { min-height: 34px; margin-top: 4px; overflow: hidden; color: #38423b; font-size: 11px; line-height: 1.45; }
+    .product-vp { margin-top: 6px; color: var(--green-dark); font-size: 11px; }
+    .heart { position: absolute; z-index: 2; top: 9px; right: 9px; width: 32px; height: 32px; display: grid; place-items: center; border: 0; border-radius: 50%; color: #929a94; background: rgba(255,255,255,.92); box-shadow: 0 4px 12px rgba(40,54,44,.09); }
+    .heart.active { color: var(--danger); }
+    .heart svg { width: 17px; height: 17px; }
+    .add-fab { position: absolute; z-index: 2; right: 12px; top: 119px; width: 36px; height: 36px; display: grid; place-items: center; border: 4px solid #fff; border-radius: 50%; color: #fff; background: var(--green); box-shadow: 0 5px 14px rgba(92,163,34,.22); }
+    .add-fab svg { width: 16px; height: 16px; }
+
+    .bottom-nav { position: absolute; z-index: 10; left: 0; right: 0; bottom: 0; height: 75px; display: grid; grid-template-columns: repeat(4, 1fr); padding: 7px 8px 14px; border-top: 1px solid var(--line); background: rgba(255,255,255,.97); backdrop-filter: blur(12px); }
+    .nav-item { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; border: 0; color: #b1b7b3; background: transparent; font-size: 9px; }
+    .nav-item.active { color: var(--green-dark); }
+    .badge { position: absolute; top: 1px; left: calc(50% + 5px); min-width: 16px; height: 16px; padding: 0 4px; display: grid; place-items: center; border: 2px solid #fff; border-radius: 999px; color: #fff; background: var(--green); font-size: 8px; font-weight: 800; }
+
+    .detail-hero { height: 282px; display: grid; place-items: center; margin: 0 18px; border-radius: 0 0 24px 24px; background: linear-gradient(160deg, #fbfcfa, #eef5ea); }
+    .detail-hero img { max-height: 245px; max-width: 76%; object-fit: contain; mix-blend-mode: multiply; }
+    .detail-content { padding: 21px 20px 122px; }
+    .detail-content h1 { margin: 0; font-size: 23px; line-height: 1.18; letter-spacing: -.025em; }
+    .detail-sub { margin: 7px 0 0; color: var(--muted); font-size: 12px; }
+    .price-line { display: flex; align-items: flex-end; justify-content: space-between; margin: 20px 0 17px; }
+    .price-line strong { font-size: 22px; }
+    .price-line span { color: var(--green-dark); font-size: 12px; }
+    .description { margin: 0; color: #626a64; font-size: 12px; line-height: 1.65; }
+    .detail-actions { position: absolute; z-index: 8; left: 0; right: 0; bottom: 0; display: grid; grid-template-columns: 112px 1fr; gap: 10px; padding: 13px 18px 22px; border-top: 1px solid var(--line); background: rgba(255,255,255,.97); }
+    .stepper { height: 46px; display: grid; grid-template-columns: 36px 1fr 36px; align-items: center; overflow: hidden; border: 1px solid var(--line); border-radius: 11px; }
+    .stepper button { height: 100%; border: 0; color: var(--green-dark); background: #fff; font-size: 20px; }
+    .stepper span { text-align: center; font-size: 13px; font-weight: 750; }
+
+    .cart-list { padding: 8px 18px 20px; }
+    .cart-item { display: grid; grid-template-columns: 76px 1fr; gap: 13px; padding: 15px 0; border-bottom: 1px solid var(--line); }
+    .cart-thumb { height: 90px; display: grid; place-items: center; border-radius: 13px; background: var(--soft); }
+    .cart-thumb img { max-width: 66px; max-height: 82px; object-fit: contain; mix-blend-mode: multiply; }
+    .cart-info { min-width: 0; }
+    .cart-info strong { display: block; font-size: 12px; line-height: 1.4; }
+    .cart-info .price { margin: 6px 0 9px; font-size: 12px; font-weight: 750; }
+    .cart-info .vp { margin-top: 5px; color: var(--green-dark); font-size: 10px; }
+    .mini-stepper { width: 98px; height: 31px; display: grid; grid-template-columns: 31px 1fr 31px; align-items: center; overflow: hidden; border-radius: 7px; background: var(--soft); }
+    .mini-stepper button { height: 100%; border: 0; color: var(--green-dark); background: transparent; font-size: 17px; }
+    .mini-stepper span { text-align: center; font-size: 11px; }
+    .summary { margin: 18px 0 0; padding: 16px; border-radius: 15px; background: var(--soft); }
+    .summary-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 9px; color: #667069; font-size: 12px; }
+    .summary-row:last-child { margin: 13px 0 0; padding-top: 13px; border-top: 1px solid #dfe5dd; color: var(--ink); font-size: 16px; font-weight: 780; }
+    .sticky-actions { position: absolute; z-index: 8; left: 0; right: 0; bottom: 0; display: grid; grid-template-columns: 1fr 1.25fr; gap: 9px; padding: 13px 18px 22px; border-top: 1px solid var(--line); background: rgba(255,255,255,.98); }
+    .empty { height: 520px; display: grid; place-items: center; padding: 30px; text-align: center; }
+    .empty svg { width: 64px; height: 64px; color: #b7beb8; }
+    .empty h3 { margin: 18px 0 6px; }
+    .empty p { margin: 0 0 18px; color: var(--muted); font-size: 12px; line-height: 1.55; }
+
+    .checkout-block { margin: 16px 18px; padding: 16px; border: 1px solid var(--line); border-radius: 16px; }
+    .checkout-block h3 { margin: 0 0 14px; font-size: 13px; }
+    .selected-kiosk { display: grid; grid-template-columns: 38px 1fr; gap: 11px; align-items: center; }
+    .selected-kiosk .mini-kiosk { width: 38px; height: 44px; display: grid; place-items: center; border-radius: 10px; background: var(--mint); }
+    .selected-kiosk strong { display: block; font-size: 11px; }
+    .selected-kiosk span { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; }
+    .field { margin-top: 11px; }
+    .field label { display: block; margin-bottom: 6px; color: #69716c; font-size: 10px; font-weight: 650; }
+    .field input, .field select { width: 100%; height: 43px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; outline: 0; color: var(--ink); background: #fff; }
+    .field input:focus, .field select:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(122,193,67,.1); }
+    .payment-option { width: 100%; display: flex; align-items: center; gap: 12px; padding: 13px; border: 1px solid var(--green); border-radius: 12px; text-align: left; color: inherit; background: var(--mint); }
+    .radio { width: 18px; height: 18px; display: grid; place-items: center; border: 2px solid var(--green); border-radius: 50%; }
+    .radio::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+    .payment-option strong { display: block; font-size: 12px; }
+    .payment-option span { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; }
+    .checkout-footer { position: absolute; z-index: 8; left: 0; right: 0; bottom: 0; padding: 13px 18px 22px; border-top: 1px solid var(--line); background: rgba(255,255,255,.98); }
+    .checkout-total { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 12px; }
+    .checkout-total strong { font-size: 16px; }
+
+    .success-screen { min-height: 100%; display: flex; flex-direction: column; align-items: center; padding: 66px 24px 30px; text-align: center; background: linear-gradient(180deg, #f8fff4, #fff 47%); }
+    .success-icon { width: 78px; height: 78px; display: grid; place-items: center; border-radius: 50%; color: #fff; background: var(--green); box-shadow: 0 13px 28px rgba(92,163,34,.25); }
+    .success-icon svg { width: 40px; height: 40px; }
+    .success-screen h1 { margin: 22px 0 7px; font-size: 24px; letter-spacing: -.025em; }
+    .success-screen > p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
+    .token-card { width: 100%; margin: 28px 0 22px; padding: 21px; border: 1px dashed rgba(92,163,34,.55); border-radius: 18px; background: #fff; box-shadow: 0 12px 30px rgba(42,64,47,.08); }
+    .token-label { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .1em; }
+    .token { margin: 4px 0 9px; color: var(--green-dark); font-size: 52px; font-weight: 800; letter-spacing: -.045em; }
+    .order-number { font-size: 11px; color: #667069; }
+    .pickup-note { display: flex; gap: 10px; width: 100%; margin-bottom: auto; padding: 14px; border-radius: 13px; text-align: left; background: var(--soft); }
+    .pickup-note svg { flex: 0 0 auto; width: 21px; height: 21px; color: var(--green-dark); }
+    .pickup-note p { margin: 0; color: #606962; font-size: 11px; line-height: 1.5; }
+
+    .login-hero { padding: 46px 24px 24px; text-align: center; }
+    .login-hero img { width: 145px; max-height: 62px; object-fit: contain; }
+    .login-hero h1 { margin: 24px 0 6px; font-size: 24px; }
+    .login-hero p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
+    .login-form { padding: 10px 24px; }
+    .login-form .field { margin-top: 14px; }
+    .demo-note { margin: 14px 0; padding: 10px 12px; border-radius: 10px; color: #667069; background: var(--soft); font-size: 10px; line-height: 1.45; }
+
+    .modal-layer { position: absolute; z-index: 30; inset: 0; display: flex; align-items: flex-end; background: rgba(20,28,23,.38); backdrop-filter: blur(2px); animation: fade .18s ease both; }
+    @keyframes fade { from { opacity: 0; } }
+    .sheet { width: 100%; padding: 9px 18px 24px; border-radius: 24px 24px 0 0; background: #fff; box-shadow: 0 -15px 45px rgba(28,39,31,.15); animation: sheetUp .22s ease both; }
+    @keyframes sheetUp { from { transform: translateY(24px); opacity: .6; } }
+    .grabber { width: 42px; height: 4px; margin: 0 auto 17px; border-radius: 999px; background: #d9ded9; }
+    .sheet-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
+    .sheet-title h3 { margin: 0; font-size: 17px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { padding: 9px 12px; border: 1px solid var(--line); border-radius: 999px; color: #626b64; background: #fff; font-size: 11px; }
+    .chip.active { border-color: rgba(122,193,67,.45); color: var(--green-deep); background: var(--mint); }
+    .sheet-actions { display: grid; grid-template-columns: 1fr 1.3fr; gap: 9px; margin-top: 20px; }
+    .toast { position: absolute; z-index: 40; left: 50%; bottom: 90px; transform: translateX(-50%); min-width: 190px; padding: 11px 14px; border-radius: 12px; color: #fff; text-align: center; background: rgba(31,43,35,.93); box-shadow: 0 10px 28px rgba(0,0,0,.17); font-size: 11px; animation: toastIn .25s ease both; }
+    @keyframes toastIn { from { opacity: 0; transform: translate(-50%, 10px); } }
+
+    .splash { position: relative; min-height: 100%; overflow: hidden; cursor: pointer; background: #fbfcfa; }
+    .splash-copy { position: relative; z-index: 4; padding: 76px 34px 0; text-align: center; }
+    .splash-copy img { width: 160px; max-height: 66px; object-fit: contain; }
+    .splash-copy h1 { margin: 24px auto 0; max-width: 270px; font-size: 29px; line-height: 1.22; letter-spacing: -.025em; }
+    .splash-product { position: absolute; z-index: 2; object-fit: contain; mix-blend-mode: multiply; filter: drop-shadow(0 18px 24px rgba(51,67,56,.12)); }
+    .splash-product.one { width: 152px; left: 33px; top: 298px; transform: rotate(-16deg); }
+    .splash-product.two { width: 138px; right: 29px; top: 443px; transform: rotate(14deg); }
+    .leaf { position: absolute; z-index: 1; border-radius: 90% 0 90% 0; background: linear-gradient(135deg, #8ab26e, #d7e7ce); opacity: .78; transform: rotate(35deg); }
+    .leaf.l1 { width: 150px; height: 55px; right: -18px; bottom: 92px; }
+    .leaf.l2 { width: 115px; height: 42px; left: 18px; bottom: 38px; transform: rotate(-18deg); }
+    .leaf.l3 { width: 76px; height: 31px; right: 91px; bottom: 29px; transform: rotate(74deg); }
+    .splash-hint { position: absolute; z-index: 5; left: 0; right: 0; bottom: 31px; color: #7b847e; text-align: center; font-size: 11px; animation: pulse 1.8s ease infinite; }
+    @keyframes pulse { 50% { opacity: .45; } }
+
+    @media (max-width: 880px) {
+      body { background: #fff; }
+      .portfolio-shell { display: block; padding: 0; }
+      .case-panel { display: none; }
+      .device-stage { min-height: 100vh; }
+      .device-stage::before { display: none; }
+      .phone { width: min(100vw, var(--phone-w)); height: min(100dvh, var(--phone-h)); min-height: 720px; border: 0; border-radius: 0; box-shadow: none; }
+      .phone::before { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; } }
+  </style>
+</head>
+<body>
+  <main class="portfolio-shell">
+    <section class="case-panel" aria-label="Описание проекта">
+      <div class="eyebrow">Portfolio reconstruction</div>
+      <h1>Herbalife<br />Kiosk</h1>
+      <p class="lead">Кликабельная мобильная реконструкция сервиса автоматизированных центров продаж — от выбора киоска до получения токена заказа.</p>
+      <div class="role-card">
+        <div class="role-item"><span>Роль</span><strong>Product Manager</strong></div>
+        <div class="role-item"><span>Платформа</span><strong>iOS · Web Kiosk</strong></div>
+        <div class="role-item"><span>Сценарий</span><strong>Поиск → заказ → выдача</strong></div>
+        <div class="role-item"><span>Статус</span><strong>Интерактивный прототип</strong></div>
+      </div>
+      <p class="source-note">Визуальный слой восстановлен по публичным экранам App Store, маршрутам MKiosk и официальным продуктовым изображениям. Для портфолио указывайте только собственный вклад и зону ответственности.</p>
+    </section>
+
+    <section class="device-stage" aria-label="Интерактивный прототип Herbalife Kiosk">
+      <div class="phone">
+        <div class="app">
+          <div class="statusbar">
+            <span>9:41</span>
+            <div class="status-icons" aria-hidden="true">
+              <span class="signal"><i></i><i></i><i></i><i></i></span>
+              <span>⌁</span>
+              <span class="battery"><b></b></span>
+            </div>
+          </div>
+          <div id="screen"></div>
+          <div id="overlay"></div>
+          <div id="toast-root"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const BRAND_LOGO = 'https://herbalife-econnect.hrbl.com/MKiosk/images/herbalife-nutrition-logo.png';
+    const PRODUCT_IMAGES = {
+      orange: 'https://www.herbalife.com/assets/market-reusable-assets/emea/india/images/canister/pc-1269-in.png',
+      vanilla: 'https://www.herbalife.com/assets/market-reusable-assets/emea/india/images/canister/pc-1247-in.png',
+      shampoo: 'https://www.herbalife.com/assets/market-reusable-assets/apac/malaysia/images/canister/pc-2564-my.png',
+      vitamins: 'https://www.herbalife.com/assets/market-reusable-assets/amer/united-states/images/canister/pc-3115-us.png'
+    };
+
+    const products = [
+      { id: 'orange', name: 'Протеиновый коктейль Формула 1', subtitle: 'Апельсиновый крем', price: 560, vp: 19.95, image: PRODUCT_IMAGES.orange, category: 'Коктейли', description: 'Сбалансированный питательный коктейль для удобного приёма пищи. Содержит белок, клетчатку, витамины и минералы.' },
+      { id: 'vanilla', name: 'Протеиновый коктейль Формула 1', subtitle: 'Ваниль', price: 1176.13, vp: 19.95, image: PRODUCT_IMAGES.vanilla, category: 'Коктейли', description: 'Классический ванильный вкус и сбалансированная формула для ежедневного рациона.' },
+      { id: 'shampoo', name: 'Шампунь Натуральный', subtitle: 'Herbal Aloe', price: 750.50, vp: 19.95, image: PRODUCT_IMAGES.shampoo, category: 'Уход', description: 'Мягко очищает волосы и кожу головы. Формула с алоэ вера подходит для регулярного использования.' },
+      { id: 'vitamins', name: 'Витаминно-минеральный комплекс', subtitle: 'Формула 2', price: 2000, vp: 19.95, image: PRODUCT_IMAGES.vitamins, category: 'Витамины', description: 'Ежедневный комплекс витаминов и минералов для поддержки сбалансированного питания.' }
+    ];
+
+    const state = {
+      screen: 'splash',
+      history: [],
+      kioskMode: 'map',
+      selectedProduct: 'orange',
+      detailQty: 1,
+      cart: { orange: 1, shampoo: 2 },
+      favorites: new Set(),
+      query: '',
+      filters: new Set(['Все']),
+      overlay: null
+    };
+
+    const icons = {
+      back: '<svg viewBox="0 0 24 24" fill="none"><path d="m15 18-6-6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      search: '<svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
+      filter: '<svg viewBox="0 0 24 24" fill="none"><path d="M4 7h10M18 7h2M4 17h2M10 17h10M14 4v6M7 14v6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="16" cy="7" r="2" stroke="currentColor" stroke-width="1.7"/><circle cx="8" cy="17" r="2" stroke="currentColor" stroke-width="1.7"/></svg>',
+      home: '<svg viewBox="0 0 24 24" fill="none"><path d="m4 10 8-6 8 6v9a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1v-9Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>',
+      catalog: '<svg viewBox="0 0 24 24" fill="none"><path d="M5 5h14M5 10h14M5 15h14M5 20h9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
+      cart: '<svg viewBox="0 0 24 24" fill="none"><path d="M4 5h2l2 10h9l2-7H7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="19" r="1.4" fill="currentColor"/><circle cx="17" cy="19" r="1.4" fill="currentColor"/></svg>',
+      user: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 20c.8-4 3-6 6.5-6s5.7 2 6.5 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+      plus: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+      bag: '<svg viewBox="0 0 24 24" fill="none"><path d="M5 8h14l-1 12H6L5 8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 9V6a3 3 0 0 1 6 0v3" stroke="currentColor" stroke-width="1.6"/></svg>',
+      heart: '<svg viewBox="0 0 24 24" fill="none"><path d="M20.5 9.3c0 5-8.5 9.7-8.5 9.7S3.5 14.3 3.5 9.3A4.3 4.3 0 0 1 12 8a4.3 4.3 0 0 1 8.5 1.3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>',
+      pin: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 21s6-6.1 6-11a6 6 0 1 0-12 0c0 4.9 6 11 6 11Z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="10" r="2.2" fill="currentColor"/></svg>',
+      clock: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.7"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
+      check: '<svg viewBox="0 0 24 24" fill="none"><path d="m5 12 4.2 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      close: '<svg viewBox="0 0 24 24" fill="none"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
+    };
+
+    function money(value) {
+      return new Intl.NumberFormat('ru-RU', { minimumFractionDigits: Number.isInteger(value) ? 0 : 2, maximumFractionDigits: 2 }).format(value) + ' ₽';
+    }
+
+    function productById(id) { return products.find(p => p.id === id) || products[0]; }
+    function cartCount() { return Object.values(state.cart).reduce((sum, qty) => sum + qty, 0); }
+    function cartTotal() { return Object.entries(state.cart).reduce((sum, [id, qty]) => sum + productById(id).price * qty, 0); }
+    function cartVp() { return Object.entries(state.cart).reduce((sum, [id, qty]) => sum + productById(id).vp * qty, 0); }
+
+    function go(screen, options = {}) {
+      if (screen !== state.screen && options.push !== false) state.history.push(state.screen);
+      state.screen = screen;
+      if (options.product) { state.selectedProduct = options.product; state.detailQty = 1; }
+      state.overlay = null;
+      render();
+    }
+
+    function back() {
+      state.screen = state.history.pop() || 'catalog';
+      state.overlay = null;
+      render();
+    }
+
+    function header(title, right = '') {
+      return `<div class="topbar"><button class="icon-btn" data-action="back" aria-label="Назад">${icons.back}</button><h2>${title}</h2>${right || '<span></span>'}</div>`;
+    }
+
+    function brandRow() {
+      return `<div class="brand-row"><img src="${BRAND_LOGO}" alt="Herbalife"/><button data-action="kiosks">Рядом ASC <span class="chev"></span></button></div>`;
+    }
+
+    function bottomNav(active) {
+      const count = cartCount();
+      const item = (key, label, icon, action) => `<button class="nav-item ${active === key ? 'active' : ''}" data-action="${action}">${icon}${key === 'cart' && count ? `<span class="badge">${count}</span>` : ''}<span>${label}</span></button>`;
+      return `<nav class="bottom-nav" aria-label="Основная навигация">
+        ${item('catalog', 'Каталог', icons.catalog, 'catalog')}
+        ${item('cart', 'Корзина', icons.bag, 'cart')}
+        ${item('profile', 'Профиль', icons.user, 'profile')}
+        ${item('auth', 'Авторизация', icons.pin, 'auth')}
+      </nav>`;
+    }
+
+    function kioskSvg() {
+      return '<svg viewBox="0 0 40 50" fill="none"><rect x="7" y="2" width="26" height="44" rx="3" fill="#fff" stroke="#7ac143" stroke-width="2"/><rect x="10" y="6" width="20" height="16" rx="1" fill="#dff4cf"/><path d="M13 10h14M13 14h9" stroke="#7ac143" stroke-width="2"/><rect x="12" y="26" width="16" height="14" rx="1" fill="#7ac143"/><circle cx="20" cy="33" r="4" fill="#fff"/><path d="M12 46h16" stroke="#5ca322" stroke-width="3" stroke-linecap="round"/></svg>';
+    }
+
+    function splashScreen() {
+      return `<section class="screen splash" data-action="start">
+        <div class="splash-copy"><img src="${BRAND_LOGO}" alt="Herbalife Nutrition"/><h1>Ваши любимые продукты в приложении</h1></div>
+        <img class="splash-product one" src="${PRODUCT_IMAGES.orange}" alt="Formula 1"/>
+        <img class="splash-product two" src="${PRODUCT_IMAGES.vanilla}" alt="Formula 1 Vanilla"/>
+        <span class="leaf l1"></span><span class="leaf l2"></span><span class="leaf l3"></span>
+        <div class="splash-hint">Коснитесь, чтобы продолжить</div>
+      </section>`;
+    }
+
+    function mapGraphic() {
+      return `<svg viewBox="0 0 370 462" aria-label="Карта Риги">
+        <rect width="370" height="462" fill="#f5f6f3"/>
+        <path d="M-30 97C75 40 92 155 192 112s133-93 225-60" fill="none" stroke="#fff" stroke-width="21"/>
+        <path d="M18 18c38 72 28 147 89 212s84 111 75 241M170-20c-10 78 50 109 64 170s-12 112 92 181M-40 313c102-32 155-6 223 34s130 42 232 9" fill="none" stroke="#fff" stroke-width="14"/>
+        <path d="M0 152 370 300M48 0l90 462M260 0 200 462M0 395l370-220" fill="none" stroke="#e7e9e5" stroke-width="4"/>
+        <path d="M-20 222c67 16 83-22 118-5s50 78 99 55 73-86 195-49" fill="none" stroke="#dbeef0" stroke-width="15"/>
+        <circle class="radius" cx="292" cy="280" r="72"/>
+        <text x="32" y="288" class="map-label" style="font-size:17px;fill:#7e857f">Riga</text>
+        <text x="195" y="110" class="map-label">CENTRS</text><text x="55" y="205" class="map-label">ĀGENSKALNS</text>
+        <text x="248" y="233" class="map-label">AVOTI</text><text x="229" y="342" class="map-label">MASKAVAS</text>
+      </svg>`;
+    }
+
+    function kiosksScreen() {
+      const list = state.kioskMode === 'list';
+      return `<section class="screen">
+        <div class="topbar"><span></span><h2>Выбор киоска</h2><span></span></div>
+        ${brandRow()}
+        <div class="segmented"><button class="${list ? 'active' : ''}" data-action="mode-list">Центры продаж</button><button class="${!list ? 'active' : ''}" data-action="mode-map">Карта</button></div>
+        ${list ? `<div class="kiosk-list"><h3>Доступные центры продаж</h3><button class="kiosk-item" data-action="select-kiosk"><span class="kiosk-illustration">${kioskSvg()}</span><span><strong>Рига, улица Пиедруяс 7A</strong><span>Центр продаж Herbalife<br/>9:00—19:00</span></span><span>${icons.back.replace('m15 18-6-6 6-6','m9 6 6 6-6 6')}</span></button></div>` : `<div class="map-area">${mapGraphic()}<button class="map-pin" data-action="select-kiosk" aria-label="Выбрать киоск">${icons.pin}</button><div class="location-card"><p class="name">ASC</p><p class="address">Рига, улица Пиедруяс 7A</p><div class="row"><span class="eta">${icons.clock} 10 мин.</span><button class="btn primary small" data-action="select-kiosk">Продолжить</button></div></div></div>`}
+      </section>`;
+    }
+
+    function productCard(p) {
+      const fav = state.favorites.has(p.id);
+      return `<article class="product-card">
+        <button class="heart ${fav ? 'active' : ''}" data-action="favorite" data-id="${p.id}" aria-label="В избранное">${icons.heart}</button>
+        <button class="product-open" data-action="product" data-id="${p.id}">
+          <div class="product-image"><img src="${p.image}" alt="${p.name}"/></div>
+          <div class="product-price">${money(p.price)}</div><div class="product-name">${p.name}</div><div class="product-vp">VP: ${p.vp.toFixed(2).replace('.', ',')}</div>
+        </button>
+        <button class="add-fab" data-action="add" data-id="${p.id}" aria-label="Добавить в корзину">${icons.bag}</button>
+      </article>`;
+    }
+
+    function catalogScreen() {
+      const filtered = products.filter(p => {
+        const matchesQuery = !state.query || (p.name + ' ' + p.subtitle).toLowerCase().includes(state.query.toLowerCase());
+        const matchesCategory = state.filters.has('Все') || state.filters.has(p.category);
+        return matchesQuery && matchesCategory;
+      });
+      return `<section class="screen has-nav">
+        <div class="topbar"><span></span><h2>Продукты</h2><button class="icon-btn green" data-action="filter" aria-label="Фильтры">${icons.filter}</button></div>
+        ${brandRow()}
+        <div class="search-row"><label class="search">${icons.search}<input id="catalog-search" value="${state.query}" placeholder="Поиск" autocomplete="off"/></label><button class="filter-btn" data-action="filter">${icons.filter}${state.filters.has('Все') ? '' : '<i class="filter-dot"></i>'}</button></div>
+        <div class="scroll"><div class="pad"><div class="section-title"><h3>Каталог</h3><span>${filtered.length} товара</span></div><div class="product-grid">${filtered.map(productCard).join('')}</div>${filtered.length ? '' : '<div class="empty"><div><h3>Ничего не найдено</h3><p>Попробуйте изменить запрос или фильтры.</p></div></div>'}</div></div>
+        ${bottomNav('catalog')}
+      </section>`;
+    }
+
+    function productScreen() {
+      const p = productById(state.selectedProduct);
+      return `<section class="screen">
+        ${header('О товаре', `<button class="icon-btn ${state.favorites.has(p.id) ? 'green' : ''}" data-action="favorite" data-id="${p.id}">${icons.heart}</button>`)}
+        <div class="scroll"><div class="detail-hero"><img src="${p.image}" alt="${p.name}"/></div><div class="detail-content"><h1>${p.name}</h1><p class="detail-sub">${p.subtitle} · ${p.category}</p><div class="price-line"><strong>${money(p.price)}</strong><span>VP: ${p.vp.toFixed(2).replace('.', ',')}</span></div><p class="description">${p.description}</p></div></div>
+        <div class="detail-actions"><div class="stepper"><button data-action="detail-minus">−</button><span>${state.detailQty}</span><button data-action="detail-plus">+</button></div><button class="btn primary" data-action="detail-add">Добавить · ${money(p.price * state.detailQty)}</button></div>
+      </section>`;
+    }
+
+    function cartScreen() {
+      const items = Object.entries(state.cart).filter(([, qty]) => qty > 0);
+      if (!items.length) return `<section class="screen has-nav"><div class="topbar"><span></span><h2>Корзина</h2><span></span></div><div class="empty"><div>${icons.bag}<h3>Корзина пуста</h3><p>Добавьте продукты из каталога, чтобы оформить заказ.</p><button class="btn primary" data-action="catalog">Перейти в каталог</button></div></div>${bottomNav('cart')}</section>`;
+      return `<section class="screen"><div class="topbar"><button class="icon-btn" data-action="catalog">${icons.back}</button><h2>Корзина</h2><button class="icon-btn" data-action="clear-cart" aria-label="Очистить">${icons.close}</button></div><div class="scroll"><div class="cart-list">${items.map(([id, qty]) => { const p = productById(id); return `<article class="cart-item"><div class="cart-thumb"><img src="${p.image}" alt="${p.name}"/></div><div class="cart-info"><strong>${p.name}</strong><div class="price">${money(p.price)}</div><div class="mini-stepper"><button data-action="cart-minus" data-id="${id}">−</button><span>${qty}</span><button data-action="cart-plus" data-id="${id}">+</button></div><div class="vp">VP: ${(p.vp * qty).toFixed(2).replace('.', ',')}</div></div></article>`; }).join('')}<div class="summary"><div class="summary-row"><span>Товары (${cartCount()})</span><span>VP: ${cartVp().toFixed(2).replace('.', ',')}</span></div><div class="summary-row"><span>Сервисный сбор</span><span>0 ₽</span></div><div class="summary-row"><span>Итого</span><strong>${money(cartTotal())}</strong></div></div></div></div><div class="sticky-actions"><button class="btn ghost" data-action="clear-cart">Очистить</button><button class="btn primary" data-action="checkout">Оформить</button></div></section>`;
+    }
+
+    function checkoutScreen() {
+      return `<section class="screen">${header('Оформление заказа')}<div class="scroll" style="padding-bottom:128px"><div class="checkout-block"><h3>Получение заказа</h3><div class="selected-kiosk"><span class="mini-kiosk">${kioskSvg()}</span><span><strong>Рига, улица Пиедруяс 7A</strong><span>Центр продаж Herbalife · сегодня до 19:00</span></span></div></div><div class="checkout-block"><h3>Данные участника</h3><div class="field"><label>Номер участника</label><input value="102 458 77"/></div><div class="field"><label>Назначение заказа</label><select><option>Личное потребление</option><option>Розничная продажа</option></select></div></div><div class="checkout-block"><h3>Способ оплаты</h3><button class="payment-option"><span class="radio"></span><span><strong>Банковская карта</strong><span>Оплата в защищённом окне</span></span></button></div></div><div class="checkout-footer"><div class="checkout-total"><span>К оплате</span><strong>${money(cartTotal())}</strong></div><button class="btn primary full" data-action="pay">Оплатить заказ</button></div></section>`;
+    }
+
+    function successScreen() {
+      return `<section class="screen success-screen"><div class="success-icon">${icons.check}</div><h1>Заказ оформлен</h1><p>Покажите номер токена у терминала<br/>выбранного центра продаж.</p><div class="token-card"><div class="token-label">Токен выдачи</div><div class="token">247</div><div class="order-number">Заказ № HK-153872</div></div><div class="pickup-note">${icons.pin}<p>Рига, улица Пиедруяс 7A<br/>Заказ хранится до 19:00 сегодняшнего дня.</p></div><button class="btn primary full" data-action="finish">Вернуться в каталог</button></section>`;
+    }
+
+    function profileScreen() {
+      return `<section class="screen has-nav"><div class="topbar"><span></span><h2>Профиль</h2><span></span></div><div class="scroll"><div class="login-hero" style="padding-top:34px"><div style="width:74px;height:74px;margin:auto;display:grid;place-items:center;border-radius:50%;color:#5ca322;background:#eef9e7">${icons.user}</div><h1>Александр</h1><p>Независимый партнёр Herbalife<br/>ID 102 458 77</p></div><div class="checkout-block"><div class="summary-row"><span>Последний заказ</span><strong>HK-153872</strong></div><div class="summary-row"><span>Статус</span><span style="color:#5ca322">Получен</span></div><div class="summary-row"><span>Общий VP</span><strong>59,85</strong></div></div></div>${bottomNav('profile')}</section>`;
+    }
+
+    function authScreen() {
+      return `<section class="screen has-nav"><div class="scroll"><div class="login-hero"><img src="${BRAND_LOGO}" alt="Herbalife Nutrition"/><h1>Авторизация</h1><p>Войдите, чтобы видеть персональные цены,<br/>объём и историю заказов.</p></div><div class="login-form"><div class="field"><label>ID участника</label><input value="10245877" inputmode="numeric"/></div><div class="field"><label>PIN-код</label><input value="••••" type="password"/></div><div class="demo-note">Демонстрационный экран: данные не отправляются и используются только внутри прототипа.</div><button class="btn primary full" data-action="profile">Войти</button></div></div>${bottomNav('auth')}</section>`;
+    }
+
+    function filterSheet() {
+      const categories = ['Все', 'Коктейли', 'Витамины', 'Уход'];
+      return `<div class="modal-layer" data-action="close-overlay"><div class="sheet" data-sheet><div class="grabber"></div><div class="sheet-title"><h3>Фильтры</h3><button class="icon-btn" data-action="close-overlay">${icons.close}</button></div><div class="chips">${categories.map(c => `<button class="chip ${state.filters.has(c) ? 'active' : ''}" data-action="toggle-filter" data-value="${c}">${c}</button>`).join('')}</div><div class="sheet-actions"><button class="btn secondary" data-action="reset-filters">Сбросить</button><button class="btn primary" data-action="apply-filters">Показать товары</button></div></div></div>`;
+    }
+
+    function render() {
+      const views = { splash: splashScreen, kiosks: kiosksScreen, catalog: catalogScreen, product: productScreen, cart: cartScreen, checkout: checkoutScreen, success: successScreen, profile: profileScreen, auth: authScreen };
+      document.getElementById('screen').innerHTML = (views[state.screen] || catalogScreen)();
+      document.getElementById('overlay').innerHTML = state.overlay === 'filter' ? filterSheet() : '';
+      const input = document.getElementById('catalog-search');
+      if (input) input.addEventListener('input', event => { state.query = event.target.value; window.clearTimeout(window.searchTimer); window.searchTimer = window.setTimeout(render, 220); });
+    }
+
+    function toast(message) {
+      const root = document.getElementById('toast-root');
+      root.innerHTML = `<div class="toast">${message}</div>`;
+      window.clearTimeout(window.toastTimer);
+      window.toastTimer = window.setTimeout(() => root.innerHTML = '', 1600);
+    }
+
+    document.addEventListener('click', event => {
+      const target = event.target.closest('[data-action]');
+      if (!target) return;
+      if (target.closest('[data-sheet]') && target.dataset.action === 'close-overlay' && target.classList.contains('modal-layer')) return;
+      const action = target.dataset.action;
+      const id = target.dataset.id;
+      if (action === 'start') go('kiosks');
+      if (action === 'back') back();
+      if (action === 'mode-list') { state.kioskMode = 'list'; render(); }
+      if (action === 'mode-map') { state.kioskMode = 'map'; render(); }
+      if (action === 'select-kiosk' || action === 'catalog') go('catalog');
+      if (action === 'kiosks') go('kiosks');
+      if (action === 'product') go('product', { product: id });
+      if (action === 'cart') go('cart');
+      if (action === 'profile') go('profile');
+      if (action === 'auth') go('auth');
+      if (action === 'checkout') go('checkout');
+      if (action === 'pay') go('success');
+      if (action === 'finish') { state.cart = {}; state.history = []; go('catalog', { push: false }); }
+      if (action === 'favorite') { state.favorites.has(id) ? state.favorites.delete(id) : state.favorites.add(id); render(); toast(state.favorites.has(id) ? 'Добавлено в избранное' : 'Удалено из избранного'); }
+      if (action === 'add') { state.cart[id] = (state.cart[id] || 0) + 1; render(); toast('Товар добавлен в корзину'); }
+      if (action === 'detail-minus') { state.detailQty = Math.max(1, state.detailQty - 1); render(); }
+      if (action === 'detail-plus') { state.detailQty += 1; render(); }
+      if (action === 'detail-add') { state.cart[state.selectedProduct] = (state.cart[state.selectedProduct] || 0) + state.detailQty; render(); toast('Товар добавлен в корзину'); }
+      if (action === 'cart-minus') { state.cart[id] = Math.max(0, (state.cart[id] || 0) - 1); if (!state.cart[id]) delete state.cart[id]; render(); }
+      if (action === 'cart-plus') { state.cart[id] = (state.cart[id] || 0) + 1; render(); }
+      if (action === 'clear-cart') { state.cart = {}; render(); }
+      if (action === 'filter') { state.overlay = 'filter'; render(); }
+      if (action === 'close-overlay') { state.overlay = null; render(); }
+      if (action === 'toggle-filter') { const value = target.dataset.value; if (value === 'Все') state.filters = new Set(['Все']); else { state.filters.delete('Все'); state.filters.has(value) ? state.filters.delete(value) : state.filters.add(value); if (!state.filters.size) state.filters.add('Все'); } render(); }
+      if (action === 'reset-filters') { state.filters = new Set(['Все']); render(); }
+      if (action === 'apply-filters') { state.overlay = null; render(); toast('Фильтры применены'); }
+    });
+
+    render();
+  </script>
+</body>
+</html>

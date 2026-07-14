@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844" role="img" aria-labelledby="title">
+  <title id="title">06 Catalog filtered</title>
+  <defs>
+    <filter id="shadow" x="-40%" y="-40%" width="180%" height="200%"><feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#1E3023" flood-opacity=".12"/></filter>
+    <filter id="softShadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#1E3023" flood-opacity=".09"/></filter>
+    <linearGradient id="hero" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FBFCFA"/><stop offset="1" stop-color="#E9F4E4"/></linearGradient>
+    <linearGradient id="brandGrad" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8FD253"/><stop offset="1" stop-color="#5CA322"/></linearGradient>
+  </defs>
+  <rect width="390" height="844" fill="#FFFFFF"/>
+  <text x="20" y="23" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="750" fill="#233028" text-anchor="start" >9:41</text>
+  <g fill="#233028" transform="translate(321 15)"><rect width="3" height="4" rx="1" y="5"/><rect x="5" width="3" height="6" rx="1" y="3"/><rect x="10" width="3" height="9" rx="1"/><path d="M19 7c3-4 8-4 11 0l-2 2c-2-2-5-2-7 0Z"/><rect x="36" y="1" width="20" height="9" rx="2" fill="none" stroke="#233028"/><rect x="38" y="3" width="14" height="5" rx="1"/><rect x="57" y="4" width="2" height="3" rx="1"/></g><text x="195" y="66" font-family="Inter,Arial,sans-serif" font-size="16" font-weight="700" fill="#233028" text-anchor="middle" >Продукты</text><g transform="translate(346 49)" stroke="#5CA322" stroke-width="1.6"><path d="M0 4h17M0 15h17M5 0v8M12 11v8"/></g><line x1="0" y1="84" x2="390" y2="84" stroke="#E7EBE7"/><g transform="translate(100 91) scale(0.78)">
+    <circle cx="18" cy="18" r="17" fill="#FFFFFF" stroke="#E7EBE7"/>
+    <path d="M18 29C8 25 8 13 18 7c10 6 10 18 0 22Z" fill="#7AC143"/>
+    <path d="M18 9v17M18 18l-6-4M18 21l7-5" fill="none" stroke="white" stroke-width="1.7" stroke-linecap="round"/>
+    
+  </g><text x="151" y="117" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="700" fill="#233028" text-anchor="start" >Рядом ASC</text><path d="m225 110 5 5 5-5" fill="none" stroke="#5CA322" stroke-width="1.5" stroke-linecap="round"/>
+    <rect x="18" y="139" width="306" height="42" rx="12" fill="#F6F8F5" stroke="none" stroke-width="0" /><circle cx="39" cy="160" r="7" fill="none" stroke="#7D857F" stroke-width="1.5"/><path d="m44 165 5 5" stroke="#7D857F" stroke-width="1.5"/><text x="58" y="165" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="500" fill="#9BA19C" text-anchor="start" >Поиск</text>
+    <rect x="332" y="139" width="40" height="42" rx="11" fill="#EEF9E7" stroke="none" stroke-width="0" /><path d="M342 151h20M342 169h20M349 147v8M356 165v8" stroke="#5CA322" stroke-width="1.4"/>
+    <circle cx="364" cy="148" r="4" fill="#7AC143" stroke="white" stroke-width="2"/>
+    <text x="18" y="211" font-family="Inter,Arial,sans-serif" font-size="16" font-weight="800" fill="#233028" text-anchor="start" >Коктейли</text><text x="372" y="211" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="550" fill="#7D857F" text-anchor="end" >2 товара</text><g><rect x="18" y="224" width="171" height="235" rx="16" fill="#FFFFFF" stroke="#E7EBE7" stroke-width="1" filter="url(#softShadow)"/>
+    <rect x="29" y="235" width="149" height="128" rx="12" fill="url(#hero)" stroke="none" stroke-width="0" /><g transform="translate(62 242) scale(0.72)" filter="url(#softShadow)">
+    <ellipse cx="45" cy="9" rx="35" ry="9" fill="#F9FAF8" stroke="#DDE3DD"/>
+    <path d="M10 9h70v94c0 9-70 9-70 0Z" fill="white" stroke="#DDE3DD"/>
+    <rect x="13" y="27" width="64" height="59" rx="4" fill="#EF9A3C" opacity=".92"/>
+    <path d="M14 57c18-16 44-14 62 4v25H14Z" fill="white" opacity=".92"/>
+    <text x="45" y="42" font-family="Inter,Arial,sans-serif" font-size="6" font-weight="800" fill="#FFFFFF" text-anchor="middle" >HERBALIFE</text>
+    <text x="45" y="58" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="900" fill="#FFFFFF" text-anchor="middle" >FORMULA 1</text>
+    <text x="45" y="74" font-family="Inter,Arial,sans-serif" font-size="5.5" font-weight="800" fill="#233028" text-anchor="middle" >ORANGE</text>
+    <ellipse cx="45" cy="103" rx="35" ry="8" fill="#EEF1ED"/>
+  </g>
+    <circle cx="163" cy="250" r="14" fill="white"/><path d="M163 257s-8-5-8-11c0-7 8-7 8-1 0-6 8-6 8 1 0 6-8 11-8 11Z" fill="none" stroke="#929A94" stroke-width="1.4"/>
+    <circle cx="164" cy="358" r="18" fill="#7AC143" stroke="white" stroke-width="4"/><path d="M171 356h-12l2 9h8l3-7h-11" fill="none" stroke="white" stroke-width="1.4"/>
+    <text x="30" y="386" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="800" fill="#233028" text-anchor="start" >560 ₽</text>
+    <text x="30" y="405" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="550" fill="#38423B" text-anchor="start"><tspan x="30" dy="0">Протеиновый коктейль</tspan><tspan x="30" dy="13">Формула 1 · Апельсин</tspan></text>
+    <text x="30" y="445" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="650" fill="#5CA322" text-anchor="start" >VP: 19,95</text>
+  </g><g><rect x="201" y="224" width="171" height="235" rx="16" fill="#FFFFFF" stroke="#E7EBE7" stroke-width="1" filter="url(#softShadow)"/>
+    <rect x="212" y="235" width="149" height="128" rx="12" fill="url(#hero)" stroke="none" stroke-width="0" /><g transform="translate(245 242) scale(0.72)" filter="url(#softShadow)">
+    <ellipse cx="45" cy="9" rx="35" ry="9" fill="#F9FAF8" stroke="#DDE3DD"/>
+    <path d="M10 9h70v94c0 9-70 9-70 0Z" fill="white" stroke="#DDE3DD"/>
+    <rect x="13" y="27" width="64" height="59" rx="4" fill="#D3B56C" opacity=".92"/>
+    <path d="M14 57c18-16 44-14 62 4v25H14Z" fill="white" opacity=".92"/>
+    <text x="45" y="42" font-family="Inter,Arial,sans-serif" font-size="6" font-weight="800" fill="#FFFFFF" text-anchor="middle" >HERBALIFE</text>
+    <text x="45" y="58" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="900" fill="#FFFFFF" text-anchor="middle" >FORMULA 1</text>
+    <text x="45" y="74" font-family="Inter,Arial,sans-serif" font-size="5.5" font-weight="800" fill="#233028" text-anchor="middle" >VANILLA</text>
+    <ellipse cx="45" cy="103" rx="35" ry="8" fill="#EEF1ED"/>
+  </g>
+    <circle cx="346" cy="250" r="14" fill="white"/><path d="M346 257s-8-5-8-11c0-7 8-7 8-1 0-6 8-6 8 1 0 6-8 11-8 11Z" fill="none" stroke="#929A94" stroke-width="1.4"/>
+    <circle cx="347" cy="358" r="18" fill="#7AC143" stroke="white" stroke-width="4"/><path d="M354 356h-12l2 9h8l3-7h-11" fill="none" stroke="white" stroke-width="1.4"/>
+    <text x="213" y="386" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="800" fill="#233028" text-anchor="start" >1 176,13 ₽</text>
+    <text x="213" y="405" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="550" fill="#38423B" text-anchor="start"><tspan x="213" dy="0">Протеиновый коктейль</tspan><tspan x="213" dy="13">Формула 1 · Ваниль</tspan></text>
+    <text x="213" y="445" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="650" fill="#5CA322" text-anchor="start" >VP: 19,95</text>
+  </g><g><rect x="0" y="769" width="390" height="75" fill="white"/><line x1="0" y1="769" x2="390" y2="769" stroke="#E7EBE7"/>
+    <g transform="translate(39 780)" stroke="#5CA322" stroke-width="1.8" stroke-linecap="round"><path d="M1 2h19M1 9h19M1 16h13"/></g><text x="49" y="818" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="600" fill="#5CA322" text-anchor="middle" >Каталог</text><g transform="translate(136 780)" stroke="#B1B7B3" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M1 2h3l2 12h10l3-9H5"/><circle cx="8" cy="18" r="1" fill="#B1B7B3"/><circle cx="16" cy="18" r="1" fill="#B1B7B3"/></g><text x="146" y="818" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="600" fill="#B1B7B3" text-anchor="middle" >Корзина</text><rect x="151" y="778" width="17" height="17" rx="9" fill="#7AC143" stroke="none" stroke-width="0" /><text x="159.5" y="790" font-family="Inter,Arial,sans-serif" font-size="8" font-weight="800" fill="#FFFFFF" text-anchor="middle" >3</text><g transform="translate(233 780)" stroke="#B1B7B3" stroke-width="1.7" fill="none"><circle cx="10" cy="6" r="4"/><path d="M2 20c1-5 4-7 8-7s7 2 8 7"/></g><text x="243" y="818" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="600" fill="#B1B7B3" text-anchor="middle" >Профиль</text><g transform="translate(330 780)" stroke="#B1B7B3" stroke-width="1.7" fill="none"><path d="M10 21s7-7 7-13A7 7 0 1 0 3 8c0 6 7 13 7 13Z"/><circle cx="10" cy="8" r="2" fill="#B1B7B3"/></g><text x="340" y="818" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="600" fill="#B1B7B3" text-anchor="middle" >Авторизация</text>
+  </g>
+</svg>

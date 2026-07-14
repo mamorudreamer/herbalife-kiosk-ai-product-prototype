@@ -1,0 +1,395 @@
+{
+  "name": "Herbalife Kiosk — Happy Path",
+  "start": "01-splash",
+  "role": "Product Manager",
+  "screens": [
+    {
+      "key": "01-splash",
+      "name": "01 · Splash",
+      "hotspots": [
+        {
+          "name": "Continue",
+          "x": 0,
+          "y": 0,
+          "w": 390,
+          "h": 844,
+          "to": "02-kiosk-map"
+        }
+      ]
+    },
+    {
+      "key": "02-kiosk-map",
+      "name": "02 · Kiosk / Map",
+      "hotspots": [
+        {
+          "name": "List tab",
+          "x": 18,
+          "y": 135,
+          "w": 176,
+          "h": 38,
+          "to": "03-kiosk-list"
+        },
+        {
+          "name": "Continue",
+          "x": 211,
+          "y": 674,
+          "w": 141,
+          "h": 48,
+          "to": "04-catalog"
+        }
+      ]
+    },
+    {
+      "key": "03-kiosk-list",
+      "name": "03 · Kiosk / List",
+      "hotspots": [
+        {
+          "name": "Map tab",
+          "x": 194,
+          "y": 135,
+          "w": 178,
+          "h": 38,
+          "to": "02-kiosk-map"
+        },
+        {
+          "name": "Select kiosk",
+          "x": 18,
+          "y": 230,
+          "w": 354,
+          "h": 106,
+          "to": "04-catalog"
+        }
+      ]
+    },
+    {
+      "key": "04-catalog",
+      "name": "04 · Catalog / Default",
+      "hotspots": [
+        {
+          "name": "Kiosk selector",
+          "x": 95,
+          "y": 88,
+          "w": 200,
+          "h": 45,
+          "to": "02-kiosk-map"
+        },
+        {
+          "name": "Filters",
+          "x": 330,
+          "y": 136,
+          "w": 44,
+          "h": 48,
+          "to": "05-filter"
+        },
+        {
+          "name": "Product",
+          "x": 18,
+          "y": 224,
+          "w": 171,
+          "h": 235,
+          "to": "07-product"
+        },
+        {
+          "name": "Cart",
+          "x": 113,
+          "y": 769,
+          "w": 96,
+          "h": 75,
+          "to": "08-cart"
+        },
+        {
+          "name": "Profile",
+          "x": 210,
+          "y": 769,
+          "w": 96,
+          "h": 75,
+          "to": "13-profile"
+        },
+        {
+          "name": "Authorization",
+          "x": 307,
+          "y": 769,
+          "w": 83,
+          "h": 75,
+          "to": "12-auth"
+        }
+      ]
+    },
+    {
+      "key": "05-filter",
+      "name": "05 · Filters / Sheet",
+      "hotspots": [
+        {
+          "name": "Close",
+          "x": 338,
+          "y": 548,
+          "w": 40,
+          "h": 40,
+          "to": "04-catalog"
+        },
+        {
+          "name": "Reset",
+          "x": 18,
+          "y": 754,
+          "w": 130,
+          "h": 48,
+          "to": "04-catalog"
+        },
+        {
+          "name": "Apply",
+          "x": 157,
+          "y": 754,
+          "w": 215,
+          "h": 48,
+          "to": "06-catalog-filtered"
+        }
+      ]
+    },
+    {
+      "key": "06-catalog-filtered",
+      "name": "06 · Catalog / Filtered",
+      "hotspots": [
+        {
+          "name": "Filters",
+          "x": 330,
+          "y": 136,
+          "w": 44,
+          "h": 48,
+          "to": "05-filter"
+        },
+        {
+          "name": "Product",
+          "x": 18,
+          "y": 224,
+          "w": 171,
+          "h": 235,
+          "to": "07-product"
+        },
+        {
+          "name": "Cart",
+          "x": 113,
+          "y": 769,
+          "w": 96,
+          "h": 75,
+          "to": "08-cart"
+        }
+      ]
+    },
+    {
+      "key": "07-product",
+      "name": "07 · Product / Qty 1",
+      "hotspots": [
+        {
+          "name": "Back",
+          "x": 8,
+          "y": 38,
+          "w": 50,
+          "h": 48,
+          "to": "04-catalog"
+        },
+        {
+          "name": "Plus",
+          "x": 86,
+          "y": 776,
+          "w": 44,
+          "h": 48,
+          "to": "07a-product-qty2"
+        },
+        {
+          "name": "Add to cart",
+          "x": 140,
+          "y": 776,
+          "w": 232,
+          "h": 48,
+          "to": "08-cart"
+        }
+      ]
+    },
+    {
+      "key": "07a-product-qty2",
+      "name": "07A · Product / Qty 2",
+      "hotspots": [
+        {
+          "name": "Back",
+          "x": 8,
+          "y": 38,
+          "w": 50,
+          "h": 48,
+          "to": "04-catalog"
+        },
+        {
+          "name": "Minus",
+          "x": 18,
+          "y": 776,
+          "w": 44,
+          "h": 48,
+          "to": "07-product"
+        },
+        {
+          "name": "Add to cart",
+          "x": 140,
+          "y": 776,
+          "w": 232,
+          "h": 48,
+          "to": "08-cart"
+        }
+      ]
+    },
+    {
+      "key": "08-cart",
+      "name": "08 · Cart",
+      "hotspots": [
+        {
+          "name": "Back",
+          "x": 8,
+          "y": 38,
+          "w": 50,
+          "h": 48,
+          "to": "04-catalog"
+        },
+        {
+          "name": "Clear",
+          "x": 18,
+          "y": 776,
+          "w": 138,
+          "h": 48,
+          "to": "09-cart-empty"
+        },
+        {
+          "name": "Checkout",
+          "x": 165,
+          "y": 776,
+          "w": 207,
+          "h": 48,
+          "to": "10-checkout"
+        }
+      ]
+    },
+    {
+      "key": "09-cart-empty",
+      "name": "09 · Cart / Empty",
+      "hotspots": [
+        {
+          "name": "Go to catalog",
+          "x": 70,
+          "y": 511,
+          "w": 250,
+          "h": 46,
+          "to": "04-catalog"
+        },
+        {
+          "name": "Catalog tab",
+          "x": 0,
+          "y": 769,
+          "w": 98,
+          "h": 75,
+          "to": "04-catalog"
+        }
+      ]
+    },
+    {
+      "key": "10-checkout",
+      "name": "10 · Checkout",
+      "hotspots": [
+        {
+          "name": "Back",
+          "x": 8,
+          "y": 38,
+          "w": 50,
+          "h": 48,
+          "to": "08-cart"
+        },
+        {
+          "name": "Pay",
+          "x": 18,
+          "y": 773,
+          "w": 354,
+          "h": 50,
+          "to": "11-success"
+        }
+      ]
+    },
+    {
+      "key": "11-success",
+      "name": "11 · Success / Token",
+      "hotspots": [
+        {
+          "name": "Return to catalog",
+          "x": 18,
+          "y": 766,
+          "w": 354,
+          "h": 52,
+          "to": "04-catalog"
+        }
+      ]
+    },
+    {
+      "key": "12-auth",
+      "name": "12 · Authorization",
+      "hotspots": [
+        {
+          "name": "Sign in",
+          "x": 24,
+          "y": 553,
+          "w": 342,
+          "h": 50,
+          "to": "13-profile"
+        },
+        {
+          "name": "Catalog tab",
+          "x": 0,
+          "y": 769,
+          "w": 98,
+          "h": 75,
+          "to": "04-catalog"
+        },
+        {
+          "name": "Cart tab",
+          "x": 98,
+          "y": 769,
+          "w": 98,
+          "h": 75,
+          "to": "08-cart"
+        },
+        {
+          "name": "Profile tab",
+          "x": 196,
+          "y": 769,
+          "w": 98,
+          "h": 75,
+          "to": "13-profile"
+        }
+      ]
+    },
+    {
+      "key": "13-profile",
+      "name": "13 · Profile",
+      "hotspots": [
+        {
+          "name": "Catalog tab",
+          "x": 0,
+          "y": 769,
+          "w": 98,
+          "h": 75,
+          "to": "04-catalog"
+        },
+        {
+          "name": "Cart tab",
+          "x": 98,
+          "y": 769,
+          "w": 98,
+          "h": 75,
+          "to": "08-cart"
+        },
+        {
+          "name": "Authorization tab",
+          "x": 294,
+          "y": 769,
+          "w": 96,
+          "h": 75,
+          "to": "12-auth"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root { color-scheme: light dark; font-family: Inter, system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 18px; color: var(--figma-color-text); background: var(--figma-color-bg); }
+    .badge { display: inline-flex; align-items: center; gap: 7px; padding: 6px 9px; border-radius: 999px; color: #356b18; background: #eef9e7; font-size: 11px; font-weight: 700; }
+    .badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #7ac143; }
+    h1 { margin: 15px 0 7px; font-size: 22px; line-height: 1.15; letter-spacing: -.025em; }
+    .lead { margin: 0 0 16px; color: var(--figma-color-text-secondary); font-size: 12px; line-height: 1.5; }
+    .role { margin: 0 0 14px; padding: 11px 12px; border: 1px solid var(--figma-color-border); border-radius: 10px; font-size: 12px; }
+    .role span { display: block; margin-bottom: 3px; color: var(--figma-color-text-secondary); font-size: 10px; text-transform: uppercase; letter-spacing: .08em; }
+    ul { margin: 0 0 16px; padding: 0; list-style: none; }
+    li { display: flex; gap: 8px; padding: 6px 0; color: var(--figma-color-text-secondary); font-size: 11px; }
+    li::before { content: "✓"; color: #5ca322; font-weight: 800; }
+    button { width: 100%; min-height: 42px; border: 0; border-radius: 10px; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+    #build { color: white; background: #7ac143; }
+    #build:hover { background: #69ad34; }
+    #build:disabled { cursor: wait; opacity: .55; }
+    #close { margin-top: 8px; color: var(--figma-color-text); background: var(--figma-color-bg-secondary); }
+    .status { min-height: 36px; margin-top: 12px; padding: 10px; border-radius: 9px; color: var(--figma-color-text-secondary); background: var(--figma-color-bg-secondary); font-size: 10px; line-height: 1.4; }
+    .status.done { color: #356b18; background: #eef9e7; }
+    .status.error { color: #a7343d; background: #fff1f2; }
+  </style>
+</head>
+<body>
+  <div class="badge">SVG-first · Offline</div>
+  <h1>Herbalife Kiosk</h1>
+  <p class="lead">Собирает портфолио-кейс, кликабельный мобильный прототип и продуктовую историю.</p>
+  <div class="role"><span>Позиция</span><strong>Product Manager</strong></div>
+  <ul>
+    <li>00 Foundations: токены и UI-паттерны</li>
+    <li>01 Prototype: 14 экранов и состояний</li>
+    <li>02 Product Story: CJM, KPI и roadmap</li>
+    <li>Happy path запускается со Splash</li>
+  </ul>
+  <button id="build">Собрать прототип</button>
+  <button id="close">Закрыть</button>
+  <div id="status" class="status">Готов к сборке. Существующие пользовательские слои не удаляются.</div>
+  <script>
+    const build = document.getElementById('build');
+    const close = document.getElementById('close');
+    const status = document.getElementById('status');
+    build.onclick = () => {
+      build.disabled = true;
+      status.className = 'status';
+      status.textContent = 'Запускаю сборку…';
+      parent.postMessage({ pluginMessage: { type: 'build' } }, '*');
+    };
+    close.onclick = () => parent.postMessage({ pluginMessage: { type: 'close' } }, '*');
+    onmessage = event => {
+      const message = event.data.pluginMessage;
+      if (!message) return;
+      if (message.type === 'progress') status.textContent = message.text;
+      if (message.type === 'done') {
+        build.disabled = false;
+        status.className = 'status done';
+        status.textContent = message.text;
+      }
+      if (message.type === 'error') {
+        build.disabled = false;
+        status.className = 'status error';
+        status.textContent = message.text;
+      }
+    };
+  </script>
+</body>
+</html>
